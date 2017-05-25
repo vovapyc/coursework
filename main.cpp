@@ -9,7 +9,7 @@ using namespace std;
 #define V 6
 
 /* Повертає true якщо є шлях від 's' до 't' в
-залишковий граф. Nакож заповнює parent[] щоб зберегти шлях */
+залишковий граф. Також заповнює parent[] щоб зберегти шлях */
 bool bfs(int rGraph[V][V], int s, int t, int parent[])
 {
     // Створити масив відвіданих і позначити всі вершини які не відвідані
@@ -50,9 +50,9 @@ int fordFulkerson(int graph[V][V], int s, int t)
     // Створення залишкового графа і заповнити залишковий граф з
     // з урахуванням потенціалу в якості вихідного графа залишкових потужностей
     // в залишковому графі
-    int rGraph[V][V]; // Residual graph where rGraph[i][j] indicates
-    // residual capacity of edge from i to j (if there
-    // is an edge. If rGraph[i][j] is 0, then there is not)
+    int rGraph[V][V]; // Залишковий граф де rGraph[i][j] вказує
+    // залишкову ємність ребра від i до j (якщо існує
+    // ребро. Якщо rGraph[i][j] дорівнює 0, то немає)
     for (u = 0; u < V; u++)
         for (v = 0; v < V; v++)
             rGraph[u][v] = graph[u][v];
@@ -61,7 +61,7 @@ int fordFulkerson(int graph[V][V], int s, int t)
 
     int max_flow = 0;
 
-    // Augment the flow while tere is path from source to sink
+    // Збільшити потік поки йде шлях від джерела до приймача
     while (bfs(rGraph, s, t, parent))
     {
         // Find minimum residual capacity of the edges along the
@@ -74,7 +74,7 @@ int fordFulkerson(int graph[V][V], int s, int t)
             path_flow = min(path_flow, rGraph[u][v]);
         }
 
-        // Оновити залишкові можливості країв і
+        // Оновити залишкові можливості ребер і
         // зворотний край уздовж шляху
         for (v = t; v != s; v = parent[v])
         {
@@ -91,17 +91,8 @@ int fordFulkerson(int graph[V][V], int s, int t)
     return max_flow;
 }
 
-// Запуск функцій вище
-int main()
+void run()
 {
-    // Українська мова для Visual Studio
-    // SetConsoleCP(1251);
-    // SetConsoleOutputCP(1251);
-
-    cout << "// Знаходження максимального потоку за методом Форда-Фалкерсона" << endl;
-    cout << "// Автор: Пицюк Володимир (vovawed.github.io)" << endl;
-    cout << endl;
-
     // Матриця
     int graph[V][V] = {
             { 0, 16, 13, 0, 0, 0 },
@@ -113,6 +104,55 @@ int main()
     };
 
     cout << "Максимально можливий потік: " << fordFulkerson(graph, 0, 5) << endl;
+}
+
+void programMenu()
+{
+    cout << "1) Інформація про курсовий проект" << endl
+         << "2) Запустити виконання програми" << endl
+         << "3) Вихід" << endl;
+
+    short num;
+    cout << "Введіть число: "; cin >> num;
+
+    switch (num) {
+        case 1:
+            cout << "Алгоритм або метод Форда-Фалкерсона знаходить максимальний потік у транспортній мережі. "
+                    "Метод Форда-Фалкерсона - метод, який базується на трьох концепціях: залишкові мережі,"
+                    " шляхи що збільшуються і розрізи. Ключову роль у методі Форда-Фалкерсона грають два поняття:"
+                    " залишкові мережі і доповнюють шляху.  Дані концепції лежать в основі важливої теореми про"
+                    " максимальний потік і мінімальний розріз, яка визначає значення максимального нащадка за допомогою"
+                    " розрізів траспортної мережі." << endl << endl;
+            programMenu();  // Запуск ще раз меню
+            break;
+        case 2:
+            run();
+            break;
+        case 3:
+            cout << "Вихід" << endl;
+            break;
+        default:
+            cout << "Не вірний ввід, спробуйте ще раз" << endl;
+            programMenu();  // Запуск ще раз меню
+    }
+}
+
+// Запуск функцій вище
+int main()
+{
+    // Українська мова для Visual Studio
+    // SetConsoleCP(1251);
+    // SetConsoleOutputCP(1251);
+
+    cout << "                                                  _\n"
+            "  ___ ___  _   _ _ __ ___  _____      _____  _ __| | __\n"
+            " / __/ _ \\| | | | '__/ __|/ _ \\ \\ /\\ / / _ \\| '__| |/ /\n"
+            "| (_| (_) | |_| | |  \\__ \\  __/\\ V  V / (_) | |  |   <\n"
+            " \\___\\___/ \\__,_|_|  |___/\\___| \\_/\\_/ \\___/|_|  |_|\\_\\"
+         << endl ;
+    cout << string(47, ' ') + "@vovawed" << endl << endl;
+
+    programMenu();
 
     // ("pause"); Для Visual Studio
 
