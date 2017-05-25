@@ -2,16 +2,17 @@
 #include <limits.h>
 #include <string.h>
 #include <queue>
+#include <windows.h>
 using namespace std;
 
 // Кількість вершин в даному графі
 #define V 6
 
-/* Повертає true якщо є шлях від джерела 's' до sink 't' в
-залишковий граф. також заповнює parent[] щоб зберегти шлях */
+/* Повертає true якщо є шлях від 's' до 't' в
+залишковий граф. Nакож заповнює parent[] щоб зберегти шлях */
 bool bfs(int rGraph[V][V], int s, int t, int parent[])
 {
-    // Створити visited масив і позначити всі вершини які не відвідані
+    // Створити масив відвіданих і позначити всі вершини які не відвідані
     bool visited[V];
     memset(visited, 0, sizeof(visited));
 
@@ -21,13 +22,13 @@ bool bfs(int rGraph[V][V], int s, int t, int parent[])
     visited[s] = true;
     parent[s] = -1;
 
-    // Standard BFS Loop
+    // Пошук в ширину
     while (!q.empty())
     {
         int u = q.front();
         q.pop();
 
-        for (int v=0; v<V; v++)
+        for (int v = 0; v<V; v++)
         {
             if (!visited[v] && rGraph[u][v] > 0)
             {
@@ -38,19 +39,17 @@ bool bfs(int rGraph[V][V], int s, int t, int parent[])
         }
     }
 
-    // If we reached sink in BFS starting from source, then return
-    // true, else false
     return visited[t];
 }
 
-// Returns the maximum flow from s to t in the given graph
+// Повертає максимальний потік від s до t в даному графіку
 int fordFulkerson(int graph[V][V], int s, int t)
 {
     int u, v;
 
-    // Create a residual graph and fill the residual graph with
-    // given capacities in the original graph as residual capacities
-    // in residual graph
+    // Створення залишкового графа і заповнити залишковий граф з
+    // з урахуванням потенціалу в якості вихідного графа залишкових потужностей
+    // в залишковому графі
     int rGraph[V][V]; // Residual graph where rGraph[i][j] indicates
     // residual capacity of edge from i to j (if there
     // is an edge. If rGraph[i][j] is 0, then there is not)
@@ -58,9 +57,9 @@ int fordFulkerson(int graph[V][V], int s, int t)
         for (v = 0; v < V; v++)
             rGraph[u][v] = graph[u][v];
 
-    int parent[V]; // This array is filled by BFS and to store path
+    int parent[V]; // Цей масив заповнюється пошуком в ширину і зберігає шлях
 
-    int max_flow = 0; // There is no flow initially
+    int max_flow = 0;
 
     // Augment the flow while tere is path from source to sink
     while (bfs(rGraph, s, t, parent))
@@ -69,47 +68,53 @@ int fordFulkerson(int graph[V][V], int s, int t)
         // path filled by BFS. Or we can say find the maximum flow
         // through the path found.
         int path_flow = INT_MAX;
-        for (v=t; v!=s; v=parent[v])
+        for (v = t; v != s; v = parent[v])
         {
             u = parent[v];
             path_flow = min(path_flow, rGraph[u][v]);
         }
 
-        // update residual capacities of the edges and reverse edges
-        // along the path
-        for (v=t; v != s; v=parent[v])
+        // Оновити залишкові можливості країв і
+        // зворотний край уздовж шляху
+        for (v = t; v != s; v = parent[v])
         {
             u = parent[v];
             rGraph[u][v] -= path_flow;
             rGraph[v][u] += path_flow;
         }
 
-        // Add path flow to overall flow
+        // Додати потік шляху до загального потоку
         max_flow += path_flow;
     }
 
-    // Return the overall flow
+    // Повертає загальний потік
     return max_flow;
 }
 
-// Driver program to test above functions
+// Запуск функцій вище
 int main()
 {
-    cout << "// Знаходження максимального потоку за методом Форда−Фалкерсона" << endl;
+    // Українська мова для Visual Studio
+    // SetConsoleCP(1251);
+    // SetConsoleOutputCP(1251);
+
+    cout << "// Знаходження максимального потоку за методом Форда-Фалкерсона" << endl;
     cout << "// Автор: Пицюк Володимир (vovawed.github.io)" << endl;
     cout << endl;
 
-    // Let us create a graph shown in the above example
+    // Матриця
     int graph[V][V] = {
-            {0, 16, 13, 0, 0, 0},
-            {0, 0, 10, 12, 0, 0},
-            {0, 4, 0, 0, 14, 0},
-            {0, 0, 9, 0, 0, 20},
-            {0, 0, 0, 7, 0, 4},
-            {0, 0, 0, 0, 0, 0}
+            { 0, 16, 13, 0, 0, 0 },
+            { 0, 0, 10, 12, 0, 0 },
+            { 0, 4, 0, 0, 14, 0 },
+            { 0, 0, 9, 0, 0, 20 },
+            { 0, 0, 0, 7, 0, 4 },
+            { 0, 0, 0, 0, 0, 0 }
     };
 
-    cout << "Максимально можливий потік: " << fordFulkerson(graph, 0, 5);
+    cout << "Максимально можливий потік: " << fordFulkerson(graph, 0, 5) << endl;
+
+    // ("pause"); Для Visual Studio
 
     return 0;
 }
