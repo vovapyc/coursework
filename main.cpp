@@ -1,6 +1,6 @@
 #include <iostream>
 #include <limits.h>
-#include <string.h>
+#include <string.h>  // Видалити '.h' для vs
 #include <queue>
 // #include <windows.h>
 using namespace std;
@@ -64,9 +64,7 @@ int fordFulkerson(int graph[V][V], int s, int t)
     // Збільшити потік поки йде шлях від джерела до приймача
     while (bfs(rGraph, s, t, parent))
     {
-        // Find minimum residual capacity of the edges along the
-        // path filled by BFS. Or we can say find the maximum flow
-        // through the path found.
+        // Знайти максимальний потік через знайдений шлях
         int path_flow = INT_MAX;
         for (v = t; v != s; v = parent[v])
         {
@@ -117,12 +115,10 @@ int main()
         cin >> num;
         switch (num) {
             case 1:
-                cout << "Алгоритм або метод Форда-Фалкерсона знаходить максимальний потік у транспортній мережі. "
-                        "Метод Форда-Фалкерсона - метод, який базується на трьох концепціях: залишкові мережі,"
-                        " шляхи що збільшуються і розрізи. Ключову роль у методі Форда-Фалкерсона грають два поняття:"
-                        " залишкові мережі і доповнюють шляху.  Дані концепції лежать в основі важливої теореми про"
-                        " максимальний потік і мінімальний розріз, яка визначає значення максимального нащадка за допомогою"
-                        " розрізів траспортної мережі." << endl << endl;
+                cout << "Знаходження максимального потоку за методом Форда-Фалкерсона" << endl
+                     << "Підготував: Пицюк Володимир" << endl
+                     << "Надвірнянський коледж НТУ" << endl
+                     << endl;
             case 2:
                 break;
             case 3:
@@ -145,7 +141,7 @@ int main()
 
     cout << "Максимально можливий потік: " << fordFulkerson(graph, 0, 5) << endl;
 
-    // ("pause"); Для Visual Studio
+    // system("pause"); Для Visual Studio
 
     return 0;
 }
