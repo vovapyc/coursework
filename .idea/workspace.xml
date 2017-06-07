@@ -12,6 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36bdb314-4aa1-4dfd-81aa-80a2d53a5d8d" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Presentation.pptx" afterPath="$PROJECT_DIR$/Presentation.pptx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc.docx" afterPath="$PROJECT_DIR$/doc.docx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -317,15 +318,15 @@
       <workItem from="1496510402636" duration="1280000" />
       <workItem from="1496563474872" duration="2096000" />
       <workItem from="1496740366949" duration="1165000" />
-      <workItem from="1496773329690" duration="1060000" />
+      <workItem from="1496773329690" duration="1297000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31760000" />
+    <option name="totallyTimeSpent" value="31997000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
